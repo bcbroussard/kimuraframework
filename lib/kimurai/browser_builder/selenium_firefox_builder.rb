@@ -89,10 +89,11 @@ module Kimurai::BrowserBuilder
           logger.debug "BrowserBuilder (selenium_firefox): enabled custom user_agent"
         end
 
-        if max_network_threads = @config[:max_network_threads].present?
-          driver_options.profile["network.http.max-connections"] = max_network_threads.to_i
-          driver_options.profile["network.http.max-persistent-connections-per-proxy"] = max_network_threads.to_i
-          driver_options.profile["network.http.max-persistent-connections-per-server"] = max_network_threads.to_i
+        if @config[:max_network_threads].to_i > 0
+          max_network_threads = @config[:max_network_threads].to_i
+          driver_options.profile["network.http.max-connections"] = max_network_threads
+          driver_options.profile["network.http.max-persistent-connections-per-proxy"] = max_network_threads
+          driver_options.profile["network.http.max-persistent-connections-per-server"] = max_network_threads
           logger.debug "BrowserBuilder (selenium_firefox): set max_network_threads"
         end
 
